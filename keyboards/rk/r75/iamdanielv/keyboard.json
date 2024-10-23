@@ -3,6 +3,16 @@
     "keyboard_name": "Royal Kludge R75",
     "bootloader": "wb32-dfu",
     "diode_direction": "ROW2COL",
+    "dynamic_keymap": {
+        "layer_count": 9
+    },
+    "eeprom": {
+        "driver": "wear_leveling",
+        "wear_leveling": {
+            "backing_size": 4096,
+            "driver": "spi_flash"
+        }
+    },
     "encoder": {
         "rotary": [
             {"pin_a": "B7", "pin_b": "B6"}
@@ -17,27 +27,16 @@
         "nkro": true,
         "rgb_matrix": true
     },
-    "matrix_pins": {
-        "cols": ["C0", "C1", "C2", "C3", "A6", "B10", "B11", "B12", "B13", "B14", "A10", "C6", "C7", "C8", "C9"],
-        "rows": ["A0", "A1", "A2", "A3", "A4", "C13"]
-    },
-    "eeprom": {
-        "driver": "wear_leveling",
-        "wear_leveling": {
-            "backing_size": 4096,
-            "driver": "spi_flash"
-        }
-    },
-    "dynamic_keymap": {
-        "layer_count": 9
-    },
-    "processor": "WB32FQ95",
     "indicators": {
         "caps_lock": "B0",
         "on_state": 0
     },
+    "matrix_pins": {
+        "cols": ["C0", "C1", "C2", "C3", "A6", "B10", "B11", "B12", "B13", "B14", "A10", "C6", "C7", "C8", "C9"],
+        "rows": ["A0", "A1", "A2", "A3", "A4", "C13"]
+    },
+    "processor": "WB32FQ95",
     "rgb_matrix": {
-        "sleep": true,
         "animations": {
             "alphas_mods": true,
             "band_pinwheel_sat": true,
@@ -82,6 +81,11 @@
             "solid_splash": true,
             "splash": true,
             "typing_heatmap": true
+        },
+        "default": {
+            "hue": 166,
+            "sat": 255,
+            "val": 128
         },
         "driver": "ws2812",
         "layout": [
@@ -151,19 +155,20 @@
             {"matrix": [5, 1], "x": 16, "y": 64, "flags": 4},
             {"matrix": [5, 2], "x": 32, "y": 64, "flags": 4},
             {"matrix": [5, 5], "x": 80, "y": 64, "flags": 4}
-        ]
+        ],
+        "sleep": true
     },
     "url": "",
     "usb": {
         "device_version": "0.1.0",
-        "pid": "0xE484",
         "force_nkro": true,
-        "vid": "0x342D",
-        "suspend_wakeup_delay": 1000
+        "pid": "0xE484",
+        "suspend_wakeup_delay": 1000,
+        "vid": "0x342D"
     },
     "ws2812": {
-        "pin": "B15",
-        "driver": "spi"
+        "driver": "spi",
+        "pin": "B15"
     },
     "layouts": {
         "LAYOUT": {
