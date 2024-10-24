@@ -51,7 +51,7 @@ enum tap_dance_keys {
 // *****************************
 // * Custom processing of keys *
 // *****************************
-enum custom_keycodes { KC_SWP_FN = SAFE_RANGE };
+enum custom_keycodes { KC_SWP_FN = SAFE_RANGE, RGB_DEF };
 
 // clang-format off
 tap_dance_action_t tap_dance_actions[] = {
@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,   _______,   _______,   _______,   _______,   _______,  _______,  _______,  _______,   _______,  _______,    _______,  _______,  _______,   _______,
         _______,   TD_KB_RST, _______,   _______,   _______,   _______,  _______,  _______,  RGB_HUD,   RGB_HUI,  RGB_M_P,    RGB_RMOD, RGB_MOD,  RGB_TOG,   _______,
         _______,   _______,   _______,   _______,   _______,   _______,  _______,  _______,  RGB_SAD,   RGB_SAI,  RGB_SPD,    RGB_SPI,            _______,   TG_CTL,
-        _______,   TD_KB_CLR, _______,   _______,   _______,   _______,  NK_TOGG,  _______,  RGB_VAD,   RGB_VAI,  _______,    _______,            RGB_VAI,
+        _______,   TD_KB_CLR, _______,   _______,   _______,   _______,  NK_TOGG,  _______,  RGB_VAD,   RGB_VAI,  RGB_DEF,    _______,            RGB_VAI,
         KC_SWP_FN, _______,   _______,                         _______,                      _______,   _______,              RGB_SPD,            RGB_VAD,   RGB_SPI
     ),
     [_NUM_LYR] = LAYOUT( // 3
@@ -190,6 +190,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false; // we handled all cases, stop further processing
+        case RGB_DEF:
+            if (record->event.pressed) {
+                rgb_matrix_mode(RGB_MATRIX_DEFAULT_MODE);
+            }
+            return false;
         default:
             return true;
     }

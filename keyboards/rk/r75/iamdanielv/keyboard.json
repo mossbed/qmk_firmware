@@ -83,7 +83,6 @@
             "typing_heatmap": true
         },
         "default": {
-            "animation": "solid_reactive",
             "hue": 166,
             "sat": 255,
             "val": 128

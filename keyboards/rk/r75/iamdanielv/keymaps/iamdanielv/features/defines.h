@@ -15,6 +15,7 @@ enum layer_names {
 #define W_ALT_CAPS LT(_WIN_FN_LYR, KC_CAPS)
 #define FN_RALT LT(_FN_LYR, KC_RALT)
 
+// clang-format off
 #define MY_UNDO   C(KC_Z)
 #define MY_CUT    C(KC_X)
 #define MY_COPY   C(KC_INS)
@@ -33,3 +34,4 @@ enum layer_names {
 #define TD_TG_CTL TD(TD_CTL_TG)
 #define TD_KB_RST TD(TD_RESET)
 #define TD_KB_CLR TD(TD_CLEAR)
+// clang-format on
