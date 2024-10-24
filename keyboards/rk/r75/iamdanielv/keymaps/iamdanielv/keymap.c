@@ -21,7 +21,7 @@ void housekeeping_task_user(void) {
     } else {
         gpio_write_pin_high(LED_MAC_PIN); // high means turn off
     }
-
+    gpio_write_pin_low(LED_WIN_LOCK_PIN);
     if (!keymap_config.no_gui) {
         // we have NOT enabled the no_gui,
         // we can re-use the Win Lock LED as NumLock indicator

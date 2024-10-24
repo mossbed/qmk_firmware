@@ -6,8 +6,8 @@
 // #define WEAR_LEVELING_LOGICAL_SIZE 2048 // defined below
 // #define WEAR_LEVELING_BACKING_SIZE 4096 // defined in keyboard.json
 
-// #define LED_CAPS_LOCK_PIN B0 // defined in keyboard.json
-#define LED_WIN_LOCK_PIN B10
+// #define LED_CAPS_LOCK_PIN B9 // defined in keyboard.json
+#define LED_WIN_LOCK_PIN B13
 #define LED_MAC_PIN B11
 
 /* SPI */

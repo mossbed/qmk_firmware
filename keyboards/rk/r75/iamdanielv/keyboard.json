@@ -4,7 +4,7 @@
     "bootloader": "wb32-dfu",
     "diode_direction": "ROW2COL",
     "dynamic_keymap": {
-        "layer_count": 9
+        "layer_count": 6
     },
     "eeprom": {
         "driver": "wear_leveling",
@@ -28,7 +28,7 @@
         "rgb_matrix": true
     },
     "indicators": {
-        "caps_lock": "B0",
+        "caps_lock": "B9",
         "on_state": 0
     },
     "matrix_pins": {
@@ -83,6 +83,7 @@
             "typing_heatmap": true
         },
         "default": {
+            "animation": "solid_reactive",
             "hue": 166,
             "sat": 255,
             "val": 128
