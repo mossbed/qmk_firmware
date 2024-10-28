@@ -7,8 +7,8 @@
 // #define WEAR_LEVELING_BACKING_SIZE 4096 // defined in keyboard.json
 
 // #define LED_CAPS_LOCK_PIN B9 // defined in keyboard.json
-#define LED_WIN_LOCK_PIN B13
-#define LED_MAC_PIN B11
+#define LED_WIN_LOCK_PIN B18
+#define LED_MAC_PIN B8
 
 /* SPI */
 #define SPI_DRIVER SPIDQ
