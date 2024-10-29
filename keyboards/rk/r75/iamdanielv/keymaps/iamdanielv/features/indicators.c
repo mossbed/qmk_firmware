@@ -9,21 +9,26 @@
 #include "fn_mode.h"
 
 // clang-format off
+// TODO: define these so that we are not using hard coded numbers for setting rgb
+
 /*  LED Matrix
-    ESC  1    2    3    4    5    6    7    8    9    0    -    =    BSPC MUTE
-    56   55   54   53   52   51   50   49   48   47   46   45   44   43
+    ESC  F1   F2   F3   F4   F5   F6   F7   F8   F9   F10  F11  F12  DEL  MUTE
+    21   20   19   18   17   16   15   14   13   12   11   10   9    8
 
-    TAB  Q    W    E    R    T    Y    U    I    O    P    [    ]    BSLS HOME
-    29   30   31   32   33   34   35   36   37   38   39   40   41   42   57
+    GRV  1    2    3    4    5    6    7    8    9    0    -    =    BSPC HOME
+    22   23   24   25   26   27   28   29   30   31   32   33   34   35   7
 
-    CAPS A    S    D    F    G    H    J    K    L    ;    '         ENT  PGUP
-    28   27   26   25   24   23   22   21   20   19   18   17        16   58
+    TAB  Q    W    E    R    T    Y    U    I    O    P    [    ]    BSLS PGUP
+    49   48   47   46   45   44   43   42   41   40   39   38   37   36   6
 
-    LSFT Z    X    C    V    B    N    M    ,    .    /    RSFT      UP   PGDN
-    3    4    5    6    7    8    9    10   11   12   13   14        15   59
+    CAPS A    S    D    F    G    H    J    K    L    ;    '         ENT  PGDN
+    50   51   52   53   54   55   56   57   58   59   60   61        62   5
+
+    LSFT Z    X    C    V    B    N    M    ,    .    /    RSFT      UP
+    75   74   73   72   71   70   69   68   67   66   65   64        63
 
     LCTL LG   LALT           SPC            RALT Fn       LEFT      DOWN RGHT
-    2    1    0              65             64   63        62        61   60
+    76   77   78             79             0    1        2          3    4
 */
 // clang-format on
 
@@ -31,7 +36,7 @@
  * RGB Indicators *
  ******************/
 void blink_numbers(bool isEnabling) {
-    for (int i = 55; i >= 44; i--) // 1(55) to EQL(44)
+    for (int i = 34; i >= 23; i--) // 1(34) to EQL(23)
     {
         if (isEnabling) {
             // enabling, flash white
@@ -44,26 +49,26 @@ void blink_numbers(bool isEnabling) {
 }
 
 void blink_arrows(void) {
-    indicator_enqueue(62, 200, 3, RGB_WHITE); // left
-    indicator_enqueue(61, 200, 3, RGB_WHITE); // down
-    indicator_enqueue(15, 200, 3, RGB_WHITE); // up
-    indicator_enqueue(60, 200, 3, RGB_WHITE); // right
+    indicator_enqueue(2, 200, 3, RGB_WHITE);  // left
+    indicator_enqueue(3, 200, 3, RGB_WHITE);  // down
+    indicator_enqueue(63, 200, 3, RGB_WHITE); // up
+    indicator_enqueue(4, 200, 3, RGB_WHITE);  // right
 }
 
 void blink_space(bool extended) {
-    indicator_enqueue(65, 200, 3, RGB_WHITE); // blink space too
+    indicator_enqueue(79, 200, 3, RGB_WHITE); // blink space too
     if (extended) {
-        indicator_enqueue(0, 200, 3, RGB_BLACK);  // blink left alt
-        indicator_enqueue(64, 200, 3, RGB_BLACK); // blink right alt
+        indicator_enqueue(78, 200, 3, RGB_BLACK); // blink left alt
+        indicator_enqueue(0, 200, 3, RGB_BLACK);  // blink right alt
     }
 }
 
 void blink_NKRO(bool isEnabling) {
     if (isEnabling) {
         const uint8_t led_indexes[12] = {
-            7,  8,  9,  10, 11, // V B N M ,
-            20, 21, 22, 23,     // K J H G
-            35, 36, 37          // Y U I
+            71, 70, 69, 68, 67, // V B N M ,
+            58, 57, 56, 55,     // K J H G
+            43, 42, 41          // Y U I
         };
 
         for (int i = 0; i < 12; i++) {
@@ -71,8 +76,8 @@ void blink_NKRO(bool isEnabling) {
         }
     } else {
         const uint8_t led_indexes[4] = {
-            8, 10, // B M
-            21, 22 // H J
+            70, 68, // B M
+            56, 57  // H J
         };
 
         for (int i = 0; i < 4; i++) {
@@ -89,7 +94,7 @@ void highlight_fn_keys(uint8_t led_min, uint8_t led_max) {
 
     rgb_led_t rgb     = hsv_to_rgb(current_hsv);
     rgb_led_t new_rgb = get_complementary_color(rgb, false);
-    for (int i = 55; i >= 44; i--) { // 55 - 44 are the number keys and - =
+    for (int i = 34; i >= 23; i--) { // 34 - 23 are the number keys and - =
         RGB_MATRIX_INDICATOR_SET_COLOR(i, new_rgb.r, new_rgb.g, new_rgb.b);
     }
 }
@@ -109,9 +114,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
     if (IS_LAYER_ON(_WIN_FN_LYR) ||
         // IS_LAYER_ON(_CTL_LYR) ||  //ignore the CTL layer since we want to see RGB effects on that layer
-        IS_LAYER_ON(_NUM_LYR) ||
-        IS_LAYER_ON(_NAV_LYR) ||
-        IS_LAYER_ON(_FN_LYR)) {
+        IS_LAYER_ON(_NUM_LYR) || IS_LAYER_ON(_NAV_LYR) || IS_LAYER_ON(_FN_LYR)) {
         // we are in a custom layer, clear all background colors
         // this will make our custom colors stand out more
         for (int i = led_min; i <= led_max; i++) {
@@ -133,15 +136,15 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         highlight_fn_keys(led_min, led_max);
 
         // highlight right shift as moving to ctl layer
-        RGB_MATRIX_INDICATOR_SET_COLOR(14, 0, 255, 255);
+        RGB_MATRIX_INDICATOR_SET_COLOR(64, 0, 255, 255);
     }
 
     if (IS_LAYER_ON(_CTL_LYR)) {
         const uint8_t led_indexes[4] = {
-            59, // use PgDn as indicator
+            5,  // use PgDn as indicator
             39, // P for persistent color
-            9,  // N for NKRO
-            2   // lctl for Fn toggle
+            69, // N for NKRO
+            76  // lctl for Fn toggle
         };
         for (int i = 0; i < 4; i++) {
             RGB_MATRIX_INDICATOR_SET_COLOR(led_indexes[i], 0x00, 0x80, 0x80);
@@ -149,10 +152,10 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
         // turn off some of the LEDS to make it easier to see our indicators
         const uint8_t led_off_indexes[15] = {
-            27, 57, 58,     // A, Home, PgUp
-            60, 61, 62, 15, // Arrow keys
-            29, 28, 3,  1,  // TAB, CAPS, LSFT, LG
-            0,  65, 64, 63  // LALT, SPC, RALT, Fn
+            51, 7,  6,      // A, Home, PgUp
+            2,  3,  4,  63, // Arrow keys
+            49, 50, 75, 77, // TAB, CAPS, LSFT, LG
+            78, 79, 0,  1   // LALT, SPC, RALT, Fn
         };
         for (int i = 0; i < 15; i++) {
             RGB_MATRIX_INDICATOR_SET_COLOR(led_off_indexes[i], 0x00, 0x00, 0x00);
@@ -167,14 +170,14 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
     if (IS_LAYER_ON(_NUM_LYR)) {
         const uint8_t led_indexes[20] = {
-            58, // use PgUp as indicator
+            6, // use PgUp as indicator
 
             // Light up the numpad to make it easier to see
             // 6 is used as numlock and starts the numpad
-            50, 49, 48, 47, 46, 45, 44, // 6, 7, 8, 9, Asterisk, minus, equals
-            36, 37, 38, 39,             // U, I, O, P = 4, 5, 6, Plus
-            21, 20, 19, 18,             // J, K, L, ; = 1, 2, 3, Enter
-            10, 11, 12, 13              // M, ,, ., / = 0, dot, dot, slash
+            28, 29, 30, 31, 32, 33, 34, // 6, 7, 8, 9, Asterisk, minus, equals
+            42, 41, 40, 39,             // U, I, O, P = 4, 5, 6, Plus
+            57, 58, 59, 60,             // J, K, L, ; = 1, 2, 3, Enter
+            68, 67, 66, 65              // M, ,, ., / = 0, dot, dot, slash
         };
 
         for (int i = 0; i < 20; i++) {
@@ -188,22 +191,22 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             RGB_MATRIX_INDICATOR_SET_COLOR(i, 0x00, 0x00, 0xFF);
         }
 
-        RGB_MATRIX_INDICATOR_SET_COLOR(57, 0xFF, 0xFF, 0xFF); // use home key as toggle indicator
+        RGB_MATRIX_INDICATOR_SET_COLOR(7, 0xFF, 0xFF, 0xFF); // use home key as toggle indicator
     }
 
     if (IS_LAYER_ON(_FN_LYR)) {
         // highlight the toggle buttons
-        RGB_MATRIX_INDICATOR_SET_COLOR(57, 0, 0, 255);   // NAV = Home
-        RGB_MATRIX_INDICATOR_SET_COLOR(58, 0, 255, 0);   // NUM = PgUp
-        RGB_MATRIX_INDICATOR_SET_COLOR(59, 0, 255, 255); // CTL = PgDn
+        RGB_MATRIX_INDICATOR_SET_COLOR(7, 0, 0, 255);   // NAV = Home
+        RGB_MATRIX_INDICATOR_SET_COLOR(6, 0, 255, 0);   // NUM = PgUp
+        RGB_MATRIX_INDICATOR_SET_COLOR(5, 0, 255, 255); // CTL = PgDn
 
         // highlight right shift as moving to ctl layer
-        RGB_MATRIX_INDICATOR_SET_COLOR(14, 0, 255, 255);
+        RGB_MATRIX_INDICATOR_SET_COLOR(64, 0, 255, 255);
 
         // highlight the aux buttons on right of keyboard
         const uint8_t led_indexes[7] = {
-            64,                    // highlight the RALT button
-            49, 48, 47, 46, 45, 44 // used for media keys = 6 keys
+            0,                     // highlight the RALT button
+            29, 30, 31, 32, 33, 34 // used for media keys = 6 keys
         };
 
         for (int i = 0; i < 7; i++) {
